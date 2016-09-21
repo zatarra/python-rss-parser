@@ -3,9 +3,9 @@ import re
 
 class RSSParser(object):
   
-  items_regex         = re.compile('<item>(.*?)<\/item>', re.S)
-  details_title_regex = re.compile('<title>(.*?)<\/title>', re.S)
-  details_link_regex  = re.compile('<link>(.*?)<\/link>', re.S)
+  items_regex         = re.compile('<item.*?>(.*?)<\/item>', re.S)
+  details_title_regex = re.compile('<title.*?>(.*?)<\/title>', re.S)
+  details_link_regex  = re.compile('<link.*?>(.*?)<\/link>', re.S)
   details_date_regex  = re.compile('<pubDate>(.*?)<\/pubDate>', re.S)
  
   def parse(self, url):
@@ -18,10 +18,10 @@ class RSSParser(object):
     return items
 
 if __name__ == "__main__":
-  import sys
+  import sys, json
   try:
     if len(sys.argv) > 1:
-      print RSSParser().parse(sys.argv[1])
+      print json.dumps(RSSParser().parse(sys.argv[1]))
   except Exception as e:
     print "Error parsing the feed you provided: %s" % e.message
     sys.exit(1)
